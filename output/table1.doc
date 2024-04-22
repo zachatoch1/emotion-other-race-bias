@@ -1,0 +1,24 @@
+{\rtf1\fs24
+\pard\qc
+Table 1. Summary Statistics All Data\par
+\trowd\trgaph75\trleft-75\intbl\trqc\clbrdrt\brdrs\cellx2880\clbrdrt\brdrs\cellx3744\clbrdrt\brdrs\cellx4608\clbrdrt\brdrs\cellx5472\clbrdrt\brdrs\cellx6048\clbrdrt\brdrs\cellx6624
+\ql \cell\qc (1)\cell\qc (2)\cell\qc (3)\cell\qc (4)\cell\qc (5)\cell\row
+\trowd\trgaph75\trleft-75\trqc\cellx2880\cellx3744\cellx4608\cellx5472\cellx6048\cellx6624
+\trowd\trgaph75\trleft-75\trqc\clbrdrb\brdrs\cellx2880\clbrdrb\brdrs\cellx3744\clbrdrb\brdrs\cellx4608\clbrdrb\brdrs\cellx5472\clbrdrb\brdrs\cellx6048\clbrdrb\brdrs\cellx6624
+\ql VARIABLES\cell\qc N\cell\qc mean\cell\qc sd\cell\qc min\cell\qc max\cell\row
+\trowd\trgaph75\trleft-75\trqc\cellx2880\cellx3744\cellx4608\cellx5472\cellx6048\cellx6624
+\ql \cell\qc \cell\qc \cell\qc \cell\qc \cell\qc \cell\row
+\ql is_image_white\cell\qc 3,600\cell\qc 0.500\cell\qc 0.500\cell\qc 0\cell\qc 1\cell\row
+\ql is_image_black\cell\qc 3,600\cell\qc 0.500\cell\qc 0.500\cell\qc 0\cell\qc 1\cell\row
+\ql is_rater_white\cell\qc 3,600\cell\qc 0.333\cell\qc 0.471\cell\qc 0\cell\qc 1\cell\row
+\ql is_rater_black\cell\qc 3,600\cell\qc 0.333\cell\qc 0.471\cell\qc 0\cell\qc 1\cell\row
+\ql is_rater_default\cell\qc 3,600\cell\qc 0.333\cell\qc 0.471\cell\qc 0\cell\qc 1\cell\row
+\ql other_race\cell\qc 3,600\cell\qc 0.333\cell\qc 0.471\cell\qc 0\cell\qc 1\cell\row
+\ql emotion_congruence\cell\qc 3,600\cell\qc 0.500\cell\qc 0.500\cell\qc 0\cell\qc 1\cell\row
+\ql rating\cell\qc 3,600\cell\qc 3.330\cell\qc 2.539\cell\qc 1\cell\qc 7\cell\row
+\ql image_emotion_angry\cell\qc 3,600\cell\qc 0.333\cell\qc 0.471\cell\qc 0\cell\qc 1\cell\row
+\ql image_emotion_happy\cell\qc 3,600\cell\qc 0.333\cell\qc 0.471\cell\qc 0\cell\qc 1\cell\row
+\ql image_emotion_sad\cell\qc 3,600\cell\qc 0.333\cell\qc 0.471\cell\qc 0\cell\qc 1\cell\row
+\trowd\trgaph75\trleft-75\trqc\trbrdrb\brdrs\clbrdrb\brdrs\cellx2880\clbrdrb\brdrs\cellx3744\clbrdrb\brdrs\cellx4608\clbrdrb\brdrs\cellx5472\clbrdrb\brdrs\cellx6048\clbrdrb\brdrs\cellx6624
+\ql \cell\qc \cell\qc \cell\qc \cell\qc \cell\qc \cell\row
+}

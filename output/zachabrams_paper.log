@@ -1,0 +1,650 @@
+---------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/zachabrams/Desktop/Paper/output/zachabrams_paper.log
+  log type:  text
+ opened on:  21 Apr 2024, 18:44:14
+
+. 
+. 
+. * read in the data
+. use "rawdata/analysis_data.dta", clear
+
+. 
+. * generate summary statistics
+. outreg2 using output/table1.doc, replace sum(log) title("Table 1. Summary Statistics All Data")
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+is_image_w~e |      3,600          .5    .5000695          0          1
+is_image_b~k |      3,600          .5    .5000695          0          1
+is_rater_w~e |      3,600    .3333333      .47147          0          1
+is_rater_b~k |      3,600    .3333333      .47147          0          1
+is_rater_d~t |      3,600    .3333333      .47147          0          1
+-------------+---------------------------------------------------------
+  other_race |      3,600    .3333333      .47147          0          1
+emotion_co~e |      3,600          .5    .5000695          0          1
+      rating |      3,600    3.330278    2.538632          1          7
+image_emo~ry |      3,600    .3333333      .47147          0          1
+image_emo~py |      3,600    .3333333      .47147          0          1
+-------------+---------------------------------------------------------
+image_emot~d |      3,600    .3333333      .47147          0          1
+
+
+output/table1.doc
+dir : seeout
+
+. 
+. ***********************************************
+. *                       Graph Data                                        *
+. ***********************************************
+. 
+. 
+. * GRAPH DISTRIBUTION OF ANSWERS BY EMOTION CONGRUENCE
+. gen ec_labeled = "emotional incongruency"
+
+. replace ec_labeled = "emotional congruency" if emotion_congruence == 1
+(1,800 real changes made)
+
+. * generate violin plots
+. * emotion_congruence
+. vioplot rating, over(ec_labeled) name(vplot, replace) ///
+>   vertical ylabel(, angle(horizontal) labsize(small)) ///
+>   xlabel(,labsize(small)) title("Figure 1: Violin Plot of Rating by Emotion Congruence", size(medium)) ///
+>   color(ltblue) bw(0.5) scheme(s1mono)
+
+. graph export "output/fig_1_vio_ec.png", replace
+file /Users/zachabrams/Desktop/Paper/output/fig_1_vio_ec.png saved as PNG format
+
+. 
+. 
+. * GRAPH DISTRIBUTION OF ANSWERS BY RATER RACE
+. * rater race
+. * generating categorical
+. gen rater_race = ""
+(3,600 missing values generated)
+
+. replace rater_race = "white" if is_rater_white == 1
+variable rater_race was str1 now str5
+(1,200 real changes made)
+
+. replace rater_race = "black" if is_rater_black == 1
+(1,200 real changes made)
+
+. replace rater_race = "default" if is_rater_default == 1
+variable rater_race was str5 now str7
+(1,200 real changes made)
+
+. * make plot
+. vioplot rating if emotion_congruence == 1, over(rater_race) name(vplot, replace) ///
+>   vertical ylabel(, angle(horizontal) labsize(small)) ///
+>   xlabel(,labsize(small)) title("Figure 2: Violin Plot of Rating by Rater Race (EC == 1)", size(medium)) ///
+>   color(ltblue) bw(0.5) scheme(s1mono)
+
+. graph export "output/fig_2_vio_rater_race.png", replace
+file /Users/zachabrams/Desktop/Paper/output/fig_2_vio_rater_race.png saved as PNG format
+
+. 
+. 
+. * GRAPH DISTRIBUTION OF ANSWERS BY RATER RACE
+. gen image_race = "black"
+
+. replace image_race = "white" if is_image_white == 1
+(1,800 real changes made)
+
+. * image races
+. vioplot rating, over(image_race) name(vplot, replace) ///
+>   vertical ylabel(, angle(horizontal) labsize(small)) ///
+>   xlabel(,labsize(small)) title("Figure 3: Violin Plot of Rating by Image Race", size(medium)) ///
+>   color(ltblue) bw(0.5) scheme(s1mono)
+
+. graph export "output/fig_3_vio_image_race.png", replace
+file /Users/zachabrams/Desktop/Paper/output/fig_3_vio_image_race.png saved as PNG format
+
+. 
+. 
+. * GRAPH DISTRIBUTION OF ANSWERS BY IMAGE IF EC = 1 ONLY
+. * by image
+. gen image_unique = ""
+(3,600 missing values generated)
+
+. replace image_unique = "Happy_W" if is_image_white == 1 & image_emotion_happy == 1 & emotion_congruence == 1
+variable image_unique was str1 now str7
+(300 real changes made)
+
+. replace image_unique = "Happy_B" if is_image_white == 0 & image_emotion_happy == 1 & emotion_congruence == 1
+(300 real changes made)
+
+. replace image_unique = "Sad_W" if is_image_white == 1 & image_emotion_sad == 1 & emotion_congruence == 1
+(300 real changes made)
+
+. replace image_unique = "Sad_B" if is_image_white == 0 & image_emotion_sad == 1 & emotion_congruence == 1
+(300 real changes made)
+
+. replace image_unique = "Angry_W" if is_image_white == 1 & image_emotion_angry == 1 & emotion_congruence == 1
+(300 real changes made)
+
+. replace image_unique = "Angry_B" if is_image_white == 0 & image_emotion_angry == 1 & emotion_congruence == 1
+(300 real changes made)
+
+. 
+. * by unique image
+. vioplot rating, over(image_unique) name(vplot, replace) ///
+>   vertical ylabel(, angle(horizontal) labsize(small)) ///
+>   xlabel(,labsize(small)) title("Figure 4: Violin Plot of Rating by Image (EC == 1)", size(medium)) ///
+>   color(ltblue) bw(0.5) scheme(s1mono)
+
+. graph export "output/fig_4_vio_image_ec.png", replace
+file /Users/zachabrams/Desktop/Paper/output/fig_4_vio_image_ec.png saved as PNG format
+
+. 
+.   
+.   
+.   
+.   
+.  
+.  
+.  
+. ***********************************************
+. *                       Run Regressions                           *
+. ***********************************************
+. 
+. * Analysis #1 Emotion Congruence Analysis
+. * reg 1
+. reg rating emotion_congruence is_rater_white is_rater_default is_image_white image_emotion_angry image_emotio
+> n_sad, r
+
+Linear regression                               Number of obs     =      3,600
+                                                F(6, 3593)        =    6317.91
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.8851
+                                                Root MSE          =     .86133
+
+-------------------------------------------------------------------------------------
+                    |               Robust
+             rating | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+--------------------+----------------------------------------------------------------
+ emotion_congruence |      4.595    .028711   160.04   0.000     4.538709    4.651291
+     is_rater_white |  -.0341667   .0357916    -0.95   0.340    -.1043405    .0360072
+   is_rater_default |     -.0425   .0348205    -1.22   0.222    -.1107699    .0257699
+     is_image_white |   .5583333    .028711    19.45   0.000     .5020419    .6146248
+image_emotion_angry |  -.6441667   .0325547   -19.79   0.000    -.7079942   -.5803391
+  image_emotion_sad |    -1.4375   .0359527   -39.98   0.000     -1.50799    -1.36701
+              _cons |   1.473056   .0358702    41.07   0.000     1.402728    1.543384
+-------------------------------------------------------------------------------------
+
+. outreg2 using output/table2.doc, replace nonotes title("Table 2: Emotion Image/Ask Congruence") ctitle("Ratin
+> g") dec(3) addtext(Rater Race, All, Image Race, All) addnote("Notes: Standard errors are given in parentheses
+>  under estimated coefficients. Standard errors are heteroskedasticity-robust (HR) for all regressions. All re
+> gressions are estimated using ordinary least squares. Coefficients are individually statistically significant
+>  at the *10%, **5%, ***1% significance level.") drop(o.image_emotion_sad)
+output/table2.doc
+dir : seeout
+
+. 
+. * reg 2
+. reg rating emotion_congruence is_rater_white is_rater_default is_image_white image_emotion_angry image_emotio
+> n_sad if is_image_white == 1, r
+note: is_image_white omitted because of collinearity.
+
+Linear regression                               Number of obs     =      1,800
+                                                F(5, 1794)        =    7681.61
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.9452
+                                                Root MSE          =       .633
+
+-------------------------------------------------------------------------------------
+                    |               Robust
+             rating | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+--------------------+----------------------------------------------------------------
+ emotion_congruence |   5.138889   .0298397   172.22   0.000     5.080365    5.197413
+     is_rater_white |   .0033333   .0352293     0.09   0.925    -.0657614    .0724281
+   is_rater_default |       -.11   .0381884    -2.88   0.004    -.1848984   -.0351016
+     is_image_white |          0  (omitted)
+image_emotion_angry |  -.1433333   .0286903    -5.00   0.000    -.1996033   -.0870633
+  image_emotion_sad |  -1.188333   .0409991   -28.98   0.000    -1.268744   -1.107922
+              _cons |   1.519444   .0415503    36.57   0.000     1.437952    1.600936
+-------------------------------------------------------------------------------------
+
+. outreg2 using output/table2.doc, append nonotes ctitle("Rating") dec(3) addtext(Rater Race, All, Image Race, 
+> White) drop(o.is_image_white)
+output/table2.doc
+dir : seeout
+
+. 
+. * reg 3
+. reg rating emotion_congruence is_rater_white is_rater_default is_image_white image_emotion_angry image_emotio
+> n_sad if is_image_white == 0, r
+note: is_image_white omitted because of collinearity.
+
+Linear regression                               Number of obs     =      1,800
+                                                F(5, 1794)        =    2283.40
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.8446
+                                                Root MSE          =     .92145
+
+-------------------------------------------------------------------------------------
+                    |               Robust
+             rating | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+--------------------+----------------------------------------------------------------
+ emotion_congruence |   4.051111   .0434378    93.26   0.000     3.965917    4.136305
+     is_rater_white |  -.0716667   .0550162    -1.30   0.193    -.1795693     .036236
+   is_rater_default |       .025   .0531374     0.47   0.638    -.0792178    .1292178
+     is_image_white |          0  (omitted)
+image_emotion_angry |     -1.145   .0505894   -22.63   0.000     -1.24422    -1.04578
+  image_emotion_sad |  -1.686667   .0571735   -29.50   0.000      -1.7988   -1.574533
+              _cons |      1.985   .0542548    36.59   0.000     1.878591    2.091409
+-------------------------------------------------------------------------------------
+
+. outreg2 using output/table2.doc, append nonotes ctitle("Rating") dec(3) addtext(Rater Race, All, Image Race, 
+> Black) drop(o.is_image_white)
+output/table2.doc
+dir : seeout
+
+. 
+. * reg 4
+. reg rating emotion_congruence is_rater_white is_rater_default is_image_white image_emotion_angry image_emotio
+> n_sad if is_rater_white == 1 & is_rater_default == 0, r
+note: is_rater_white omitted because of collinearity.
+note: is_rater_default omitted because of collinearity.
+
+Linear regression                               Number of obs     =      1,200
+                                                F(4, 1195)        =    2880.59
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.8818
+                                                Root MSE          =     .87546
+
+-------------------------------------------------------------------------------------
+                    |               Robust
+             rating | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+--------------------+----------------------------------------------------------------
+ emotion_congruence |        4.6   .0505446    91.01   0.000     4.500834    4.699166
+     is_rater_white |          0  (omitted)
+   is_rater_default |          0  (omitted)
+     is_image_white |   .6533333   .0505446    12.93   0.000     .5541672    .7524994
+image_emotion_angry |       -.69   .0574564   -12.01   0.000    -.8027266   -.5772734
+  image_emotion_sad |    -1.3375   .0627564   -21.31   0.000    -1.460625   -1.214375
+              _cons |   1.370833   .0491912    27.87   0.000     1.274323    1.467344
+-------------------------------------------------------------------------------------
+
+. outreg2 using output/table2.doc, append nonotes ctitle("Rating") dec(3) addtext(Rater Race, White, Image Race
+> , All) drop(o.is_rater_white o.is_rater_default)
+output/table2.doc
+dir : seeout
+
+. 
+. * reg 5
+. reg rating emotion_congruence is_rater_white is_rater_default is_image_white image_emotion_angry image_emotio
+> n_sad if is_rater_white == 0 & is_rater_default == 0, r
+note: is_rater_white omitted because of collinearity.
+note: is_rater_default omitted because of collinearity.
+
+Linear regression                               Number of obs     =      1,200
+                                                F(4, 1195)        =    3268.52
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.8822
+                                                Root MSE          =     .87459
+
+-------------------------------------------------------------------------------------
+                    |               Robust
+             rating | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+--------------------+----------------------------------------------------------------
+ emotion_congruence |   4.568333   .0504942    90.47   0.000     4.469266    4.667401
+     is_rater_white |          0  (omitted)
+   is_rater_default |          0  (omitted)
+     is_image_white |   .5783333   .0504942    11.45   0.000     .4792661    .6774006
+image_emotion_angry |     -.6225   .0537403   -11.58   0.000    -.7279359   -.5170641
+  image_emotion_sad |    -1.5425   .0673023   -22.92   0.000    -1.674544   -1.410456
+              _cons |   1.504167    .050647    29.70   0.000       1.4048    1.603534
+-------------------------------------------------------------------------------------
+
+. outreg2 using output/table2.doc, append nonotes ctitle("Rating") dec(3) addtext(Rater Race, Black, Image Race
+> , All) drop(o.is_rater_white o.is_rater_default)
+output/table2.doc
+dir : seeout
+
+. 
+. * reg 6
+. reg rating emotion_congruence is_rater_white is_rater_default is_image_white image_emotion_angry image_emotio
+> n_sad if is_rater_default == 1, r
+note: is_rater_white omitted because of collinearity.
+note: is_rater_default omitted because of collinearity.
+
+Linear regression                               Number of obs     =      1,200
+                                                F(4, 1195)        =    3454.22
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.8933
+                                                Root MSE          =      .8285
+
+-------------------------------------------------------------------------------------
+                    |               Robust
+             rating | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+--------------------+----------------------------------------------------------------
+ emotion_congruence |   4.616667   .0478333    96.52   0.000      4.52282    4.710513
+     is_rater_white |          0  (omitted)
+   is_rater_default |          0  (omitted)
+     is_image_white |   .4433333   .0478333     9.27   0.000     .3494866      .53718
+image_emotion_angry |       -.62   .0579694   -10.70   0.000    -.7337332   -.5062668
+  image_emotion_sad |    -1.4325   .0557384   -25.70   0.000    -1.541856   -1.323144
+              _cons |     1.4675     .04702    31.21   0.000     1.375249    1.559751
+-------------------------------------------------------------------------------------
+
+. outreg2 using output/table2.doc, append nonotes ctitle("Rating") dec(3) addtext(Rater Race, Default, Image Ra
+> ce, All) drop(o.is_rater_white o.is_rater_default)
+output/table2.doc
+dir : seeout
+
+. 
+. 
+. * Analysis #2 Other Race Effect Analysis
+. * generate a same race binary
+. gen same_race = 0
+
+. replace same_race = 1 if is_image_white == 1 & is_rater_white == 1
+(600 real changes made)
+
+. replace same_race = 1 if is_image_black == 1 & is_rater_black == 1
+(600 real changes made)
+
+. *reg 1
+. reg rating other_race same_race emotion_congruence is_image_white image_emotion_angry image_emotion_sad image
+> _emotion_happy, r
+note: image_emotion_sad omitted because of collinearity.
+
+Linear regression                               Number of obs     =      3,600
+                                                F(6, 3593)        =    6335.58
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.8851
+                                                Root MSE          =     .86131
+
+-------------------------------------------------------------------------------------
+                    |               Robust
+             rating | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+--------------------+----------------------------------------------------------------
+         other_race |   .0066667   .0348155     0.19   0.848    -.0615934    .0749267
+          same_race |   .0441667   .0348739     1.27   0.205    -.0242079    .1125412
+ emotion_congruence |      4.595   .0287102   160.05   0.000      4.53871     4.65129
+     is_image_white |   .5583333   .0287102    19.45   0.000     .5020434    .6146233
+image_emotion_angry |   .7933333   .0368145    21.55   0.000     .7211539    .8655127
+  image_emotion_sad |          0  (omitted)
+image_emotion_happy |     1.4375   .0359622    39.97   0.000     1.366992    1.508008
+              _cons |  -.0069444   .0379836    -0.18   0.855    -.0814161    .0675272
+-------------------------------------------------------------------------------------
+
+. test other_race = same_race, df(1e10)
+
+ ( 1)  other_race - same_race = 0
+
+       F(  1, 1.0e+10) =    1.10
+            Prob > F =    0.2947
+
+. scalar f_stat = r(F)
+
+. scalar p_value = r(p)
+
+. outreg2 using output/table3.doc, replace nonotes title("Table 3: Other Race Effect") ctitle("Rating") dec(3) 
+> addtext(Rater Race, All) addstat("F-statistic for other-race same-race heterogeneity", f_stat, "P-value", p_v
+> alue) addnote("Notes: Standard errors are given in parentheses under estimated coefficients. Standard errors 
+> are heteroskedasticity-robust (HR) for all regressions. All regressions are estimated using ordinary least sq
+> uares. Coefficients are individually statistically significant at the *10%, **5%, ***1% significance level.")
+output/table3.doc
+dir : seeout
+
+. 
+. *reg 2
+. reg rating other_race same_race emotion_congruence is_image_white image_emotion_angry image_emotion_sad image
+> _emotion_happy if is_rater_white == 1 | is_rater_default == 1, r
+note: image_emotion_sad omitted because of collinearity.
+
+Linear regression                               Number of obs     =      2,400
+                                                F(6, 2393)        =    4158.72
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.8873
+                                                Root MSE          =     .85245
+
+-------------------------------------------------------------------------------------
+                    |               Robust
+             rating | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+--------------------+----------------------------------------------------------------
+         other_race |  -.0966667   .0555249    -1.74   0.082    -.2055485    .0122152
+          same_race |   .1133333   .0419698     2.70   0.007     .0310324    .1956343
+ emotion_congruence |   4.608333   .0348011   132.42   0.000      4.54009    4.676577
+     is_image_white |   .4433333   .0478439     9.27   0.000     .3495135    .5371531
+image_emotion_angry |        .73   .0449807    16.23   0.000     .6417949    .8182051
+  image_emotion_sad |          0  (omitted)
+image_emotion_happy |      1.385   .0419638    33.00   0.000     1.302711    1.467289
+              _cons |      .0825   .0447431     1.84   0.065    -.0052392    .1702392
+-------------------------------------------------------------------------------------
+
+. test other_race = same_race, df(1e10)
+
+ ( 1)  other_race - same_race = 0
+
+       F(  1, 1.0e+10) =    9.10
+            Prob > F =    0.0026
+
+. scalar f_stat = r(F)
+
+. scalar p_value = r(p)
+
+. outreg2 using output/table3.doc, append nonotes ctitle("Rating") dec(3) addtext(Rater Race, White or Default)
+>  addstat("F-statistic for other-race same-race heterogeneity", f_stat, "P-value", p_value)
+output/table3.doc
+dir : seeout
+
+. 
+. *reg 3
+. reg rating other_race same_race emotion_congruence is_image_white image_emotion_angry image_emotion_sad image
+> _emotion_happy if is_rater_white == 0 | is_rater_default == 1, r
+note: image_emotion_sad omitted because of collinearity.
+
+Linear regression                               Number of obs     =      2,400
+                                                F(6, 2393)        =    4517.45
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.8876
+                                                Root MSE          =     .85179
+
+-------------------------------------------------------------------------------------
+                    |               Robust
+             rating | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+--------------------+----------------------------------------------------------------
+         other_race |        .11   .0416676     2.64   0.008     .0282917    .1917083
+          same_race |      -.025    .055685    -0.45   0.654    -.1341957    .0841957
+ emotion_congruence |     4.5925   .0347743   132.07   0.000     4.524309    4.660691
+     is_image_white |   .4433333   .0478314     9.27   0.000      .349538    .5371287
+image_emotion_angry |     .86625    .044387    19.52   0.000     .7792091    .9532909
+  image_emotion_sad |          0  (omitted)
+image_emotion_happy |     1.4875   .0437115    34.03   0.000     1.401784    1.573216
+              _cons |   .0108333   .0452942     0.24   0.811    -.0779867    .0996533
+-------------------------------------------------------------------------------------
+
+. test other_race = same_race, df(1e10)
+
+ ( 1)  other_race - same_race = 0
+
+       F(  1, 1.0e+10) =    3.77
+            Prob > F =    0.0522
+
+. scalar f_stat = r(F)
+
+. scalar p_value = r(p)
+
+. outreg2 using output/table3.doc, append nonotes ctitle("Rating") dec(3) addtext(Rater Race, Black or Default)
+>  addstat("F-statistic for other-race same-race heterogeneity", f_stat, "P-value", p_value)
+output/table3.doc
+dir : seeout
+
+. 
+. 
+. * Analysis #3 General Effect of Rater Race
+. * reg 1
+. reg rating is_rater_white is_rater_black is_image_white image_emotion_angry image_emotion_sad image_emotion_h
+> appy if emotion_congruence == 1, r
+note: image_emotion_sad omitted because of collinearity.
+
+Linear regression                               Number of obs     =      1,800
+                                                F(5, 1794)        =    1179.84
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.7394
+                                                Root MSE          =     .76733
+
+-------------------------------------------------------------------------------------
+                    |               Robust
+             rating | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+--------------------+----------------------------------------------------------------
+     is_rater_white |  -2.71e-15   .0453716    -0.00   1.000    -.0889867    .0889867
+     is_rater_black |   .0183333    .043036     0.43   0.670    -.0660726    .1027392
+     is_image_white |   1.102222   .0361724    30.47   0.000     1.031278    1.173167
+image_emotion_angry |   1.603333   .0493048    32.52   0.000     1.506632    1.700034
+  image_emotion_sad |          0  (omitted)
+image_emotion_happy |       2.85   .0388505    73.36   0.000     2.773803    2.926197
+              _cons |   3.586111   .0433322    82.76   0.000     3.501124    3.671098
+-------------------------------------------------------------------------------------
+
+. test is_rater_white = is_rater_black, df(1e10)
+
+ ( 1)  is_rater_white - is_rater_black = 0
+
+       F(  1, 1.0e+10) =    0.17
+            Prob > F =    0.6801
+
+. scalar f_stat = r(F)
+
+. scalar p_value = r(p)
+
+. 
+. outreg2 using output/table4.doc, replace nonotes title("Table 4: Rater Race Effect") ctitle("Rating") dec(3) 
+> addtext(Emotion Congruence, 1) addstat("F-statistic for white-rater black-rater heterogeneity", f_stat, "P-va
+> lue", p_value) addnote("Notes: Standard errors are given in parentheses under estimated coefficients. Standar
+> d errors are heteroskedasticity-robust (HR) for all regressions. All regressions are estimated using ordinary
+>  least squares. Coefficients are individually statistically significant at the *10%, **5%, ***1% significance
+>  level.")
+output/table4.doc
+dir : seeout
+
+. * reg 2
+. reg rating is_rater_white is_rater_black is_image_white image_emotion_angry image_emotion_sad image_emotion_h
+> appy if emotion_congruence == 0, r
+note: image_emotion_sad omitted because of collinearity.
+
+Linear regression                               Number of obs     =      1,800
+                                                F(5, 1794)        =       4.86
+                                                Prob > F          =     0.0002
+                                                R-squared         =     0.0149
+                                                Root MSE          =     .27634
+
+-------------------------------------------------------------------------------------
+                    |               Robust
+             rating | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+--------------------+----------------------------------------------------------------
+     is_rater_white |   .0166667   .0092376     1.80   0.071     -.001451    .0347843
+     is_rater_black |   .0666667   .0174733     3.82   0.000     .0323965    .1009369
+     is_image_white |   .0144444    .013027     1.11   0.268    -.0111051     .039994
+image_emotion_angry |  -.0166667   .0108637    -1.53   0.125    -.0379735    .0046402
+  image_emotion_sad |          0  (omitted)
+image_emotion_happy |       .025   .0178483     1.40   0.161    -.0100057    .0600057
+              _cons |       .995   .0132761    74.95   0.000     .9689617    1.021038
+-------------------------------------------------------------------------------------
+
+. test is_rater_white = is_rater_black, df(1e10)
+
+ ( 1)  is_rater_white - is_rater_black = 0
+
+       F(  1, 1.0e+10) =    6.70
+            Prob > F =    0.0096
+
+. scalar f_stat = r(F)
+
+. scalar p_value = r(p)
+
+. 
+. outreg2 using output/table4.doc, append nonotes ctitle("Rating") dec(3) addtext(Emotion Congruence, 0) addsta
+> t("F-statistic for white-rater black-rater heterogeneity", f_stat, "P-value", p_value)
+output/table4.doc
+dir : seeout
+
+. 
+. 
+. * reg 3
+. reg rating is_rater_white is_rater_black emotion_congruence is_image_white image_emotion_angry image_emotion_
+> sad image_emotion_happy, r
+note: image_emotion_sad omitted because of collinearity.
+
+Linear regression                               Number of obs     =      3,600
+                                                F(6, 3593)        =    6317.91
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.8851
+                                                Root MSE          =     .86133
+
+-------------------------------------------------------------------------------------
+                    |               Robust
+             rating | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+--------------------+----------------------------------------------------------------
+     is_rater_white |   .0083333   .0348703     0.24   0.811    -.0600342    .0767008
+     is_rater_black |      .0425   .0348205     1.22   0.222    -.0257699    .1107699
+ emotion_congruence |      4.595    .028711   160.04   0.000     4.538709    4.651291
+     is_image_white |   .5583333    .028711    19.45   0.000     .5020419    .6146248
+image_emotion_angry |   .7933333    .036838    21.54   0.000     .7211079    .8655588
+  image_emotion_sad |          0  (omitted)
+image_emotion_happy |     1.4375   .0359527    39.98   0.000      1.36701     1.50799
+              _cons |  -.0069444   .0379899    -0.18   0.855    -.0814283    .0675394
+-------------------------------------------------------------------------------------
+
+. test is_rater_white = is_rater_black, df(1e10)
+
+ ( 1)  is_rater_white - is_rater_black = 0
+
+       F(  1, 1.0e+10) =    0.91
+            Prob > F =    0.3398
+
+. scalar f_stat = r(F)
+
+. scalar p_value = r(p)
+
+. 
+. outreg2 using output/table4.doc, append nonotes ctitle("Rating") dec(3) addtext(Emotion Congruence, All) adds
+> tat("F-statistic for white-rater black-rater heterogeneity", f_stat, "P-value", p_value)
+output/table4.doc
+dir : seeout
+
+. 
+. 
+. * Analysis #4 Effect of EC interactions
+. reg rating b1.emotion_congruence##is_rater_white b1.emotion_congruence##is_rater_black is_image_white image_e
+> motion_angry image_emotion_happy image_emotion_sad, r
+note: image_emotion_sad omitted because of collinearity.
+
+Linear regression                               Number of obs     =      3,600
+                                                F(8, 3591)        =    4747.51
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.8851
+                                                Root MSE          =     .86151
+
+---------------------------------------------------------------------------------------------------
+                                  |               Robust
+                           rating | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+----------------------------------+----------------------------------------------------------------
+             0.emotion_congruence |  -4.616667   .0479126   -96.36   0.000    -4.710605   -4.522728
+                 1.is_rater_white |   2.43e-14   .0576317     0.00   1.000    -.1129942    .1129942
+                                  |
+emotion_congruence#is_rater_white |
+                             0 1  |   .0166667    .069757     0.24   0.811    -.1201006     .153434
+                                  |
+                 1.is_rater_black |   .0183333   .0569335     0.32   0.747    -.0932919    .1299585
+                                  |
+emotion_congruence#is_rater_black |
+                             0 1  |   .0483333   .0696533     0.69   0.488    -.0882307    .1848973
+                                  |
+                   is_image_white |   .5583333    .028717    19.44   0.000       .50203    .6146366
+              image_emotion_angry |   .7933333   .0368522    21.53   0.000     .7210799    .8655868
+              image_emotion_happy |     1.4375   .0359479    39.99   0.000      1.36702     1.50798
+                image_emotion_sad |          0  (omitted)
+                            _cons |   4.598889   .0500589    91.87   0.000     4.500742    4.697036
+---------------------------------------------------------------------------------------------------
+
+. 
+. outreg2 using output/table4.doc, append nonotes ctitle("Rating") dec(3) addtext(Emotion Congruence, All)
+output/table4.doc
+dir : seeout
+
+. * close log
+. cap log close

@@ -1,0 +1,58 @@
+{\rtf1\fs24
+\pard\qc
+Table 4: Rater Race Effect\par
+\trowd\trgaph75\trleft-75\intbl\trqc\clbrdrt\brdrs\cellx7776\clbrdrt\brdrs\cellx9072\clbrdrt\brdrs\cellx10368\clbrdrt\brdrs\cellx11664\clbrdrt\brdrs\cellx13104
+\ql \cell\qc (1)\cell\qc (2)\cell\qc (3)\cell\qc (4)\cell\row
+\trowd\trgaph75\trleft-75\trqc\cellx7776\cellx9072\cellx10368\cellx11664\cellx13104
+\trowd\trgaph75\trleft-75\trqc\clbrdrb\brdrs\cellx7776\clbrdrb\brdrs\cellx9072\clbrdrb\brdrs\cellx10368\clbrdrb\brdrs\cellx11664\clbrdrb\brdrs\cellx13104
+\ql VARIABLES\cell\qc Rating\cell\qc Rating\cell\qc Rating\cell\qc Rating\cell\row
+\trowd\trgaph75\trleft-75\trqc\cellx7776\cellx9072\cellx10368\cellx11664\cellx13104
+\ql \cell\qc \cell\qc \cell\qc \cell\qc \cell\row
+\ql 0.emotion_congruence\cell\qc \cell\qc \cell\qc \cell\qc -4.617***\cell\row
+\ql \cell\qc \cell\qc \cell\qc \cell\qc (0.048)\cell\row
+\ql 1.is_rater_white\cell\qc \cell\qc \cell\qc \cell\qc 0.000\cell\row
+\ql \cell\qc \cell\qc \cell\qc \cell\qc (0.058)\cell\row
+\ql 0o.emotion_congruence#0b.is_rater_white\cell\qc \cell\qc \cell\qc \cell\qc 0.000\cell\row
+\ql \cell\qc \cell\qc \cell\qc \cell\qc (0.000)\cell\row
+\ql 0.emotion_congruence#1.is_rater_white\cell\qc \cell\qc \cell\qc \cell\qc 0.017\cell\row
+\ql \cell\qc \cell\qc \cell\qc \cell\qc (0.070)\cell\row
+\ql 1b.emotion_congruence#0b.is_rater_white\cell\qc \cell\qc \cell\qc \cell\qc 0.000\cell\row
+\ql \cell\qc \cell\qc \cell\qc \cell\qc (0.000)\cell\row
+\ql 1b.emotion_congruence#1o.is_rater_white\cell\qc \cell\qc \cell\qc \cell\qc 0.000\cell\row
+\ql \cell\qc \cell\qc \cell\qc \cell\qc (0.000)\cell\row
+\ql 1.is_rater_black\cell\qc \cell\qc \cell\qc \cell\qc 0.018\cell\row
+\ql \cell\qc \cell\qc \cell\qc \cell\qc (0.057)\cell\row
+\ql 0o.emotion_congruence#0b.is_rater_black\cell\qc \cell\qc \cell\qc \cell\qc 0.000\cell\row
+\ql \cell\qc \cell\qc \cell\qc \cell\qc (0.000)\cell\row
+\ql 0.emotion_congruence#1.is_rater_black\cell\qc \cell\qc \cell\qc \cell\qc 0.048\cell\row
+\ql \cell\qc \cell\qc \cell\qc \cell\qc (0.070)\cell\row
+\ql 1b.emotion_congruence#0b.is_rater_black\cell\qc \cell\qc \cell\qc \cell\qc 0.000\cell\row
+\ql \cell\qc \cell\qc \cell\qc \cell\qc (0.000)\cell\row
+\ql 1b.emotion_congruence#1o.is_rater_black\cell\qc \cell\qc \cell\qc \cell\qc 0.000\cell\row
+\ql \cell\qc \cell\qc \cell\qc \cell\qc (0.000)\cell\row
+\ql is_image_white\cell\qc 1.102***\cell\qc 0.014\cell\qc 0.558***\cell\qc 0.558***\cell\row
+\ql \cell\qc (0.036)\cell\qc (0.013)\cell\qc (0.029)\cell\qc (0.029)\cell\row
+\ql image_emotion_angry\cell\qc 1.603***\cell\qc -0.017\cell\qc 0.793***\cell\qc 0.793***\cell\row
+\ql \cell\qc (0.049)\cell\qc (0.011)\cell\qc (0.037)\cell\qc (0.037)\cell\row
+\ql image_emotion_happy\cell\qc 2.850***\cell\qc 0.025\cell\qc 1.438***\cell\qc 1.437***\cell\row
+\ql \cell\qc (0.039)\cell\qc (0.018)\cell\qc (0.036)\cell\qc (0.036)\cell\row
+\ql o.image_emotion_sad\cell\qc -\cell\qc -\cell\qc -\cell\qc -\cell\row
+\ql \cell\qc \cell\qc \cell\qc \cell\qc \cell\row
+\ql is_rater_white\cell\qc -0.000\cell\qc 0.017*\cell\qc 0.008\cell\qc \cell\row
+\ql \cell\qc (0.045)\cell\qc (0.009)\cell\qc (0.035)\cell\qc \cell\row
+\ql is_rater_black\cell\qc 0.018\cell\qc 0.067***\cell\qc 0.043\cell\qc \cell\row
+\ql \cell\qc (0.043)\cell\qc (0.017)\cell\qc (0.035)\cell\qc \cell\row
+\ql emotion_congruence\cell\qc \cell\qc \cell\qc 4.595***\cell\qc \cell\row
+\ql \cell\qc \cell\qc \cell\qc (0.029)\cell\qc \cell\row
+\ql Constant\cell\qc 3.586***\cell\qc 0.995***\cell\qc -0.007\cell\qc 4.599***\cell\row
+\ql \cell\qc (0.043)\cell\qc (0.013)\cell\qc (0.038)\cell\qc (0.050)\cell\row
+\ql \cell\qc \cell\qc \cell\qc \cell\qc \cell\row
+\ql Observations\cell\qc 1,800\cell\qc 1,800\cell\qc 3,600\cell\qc 3,600\cell\row
+\ql R-squared\cell\qc 0.739\cell\qc 0.015\cell\qc 0.885\cell\qc 0.885\cell\row
+\ql Emotion Congruence\cell\qc 1\cell\qc 0\cell\qc All\cell\qc All\cell\row
+\ql F-statistic for white-rater black-rater heterogeneity\cell\qc 0.170\cell\qc 6.702\cell\qc 0.911\cell\qc \cell\row
+\trowd\trgaph75\trleft-75\trqc\trbrdrb\brdrs\clbrdrb\brdrs\cellx7776\clbrdrb\brdrs\cellx9072\clbrdrb\brdrs\cellx10368\clbrdrb\brdrs\cellx11664\clbrdrb\brdrs\cellx13104
+\ql P-value\cell\qc 0.680\cell\qc 0.00963\cell\qc 0.340\cell\qc \cell\row
+\pard\qc
+Notes: Standard errors are given in parentheses under estimated coefficients. Standard errors are heteroskedasticity-robust (HR) for all regressions. All regressions are estimated using ordinary least squares. Coefficients are individually statistically significant at the *10%, **5%, ***1% significance level.\par
+}

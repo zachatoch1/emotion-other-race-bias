@@ -1,0 +1,24 @@
+Table 2: Emotion Image/Ask Congruence						
+	(1)	(2)	(3)	(4)	(5)	(6)
+VARIABLES	Rating	Rating	Rating	Rating	Rating	Rating
+						
+emotion_congruence	4.595***	5.139***	4.051***	4.600***	4.568***	4.617***
+	(0.029)	(0.030)	(0.043)	(0.051)	(0.050)	(0.048)
+is_rater_white	-0.034	0.003	-0.072			
+	(0.036)	(0.035)	(0.055)			
+is_rater_default	-0.042	-0.110***	0.025			
+	(0.035)	(0.038)	(0.053)			
+is_image_white	0.558***			0.653***	0.578***	0.443***
+	(0.029)			(0.051)	(0.050)	(0.048)
+image_emotion_angry	-0.644***	-0.143***	-1.145***	-0.690***	-0.623***	-0.620***
+	(0.033)	(0.029)	(0.051)	(0.057)	(0.054)	(0.058)
+image_emotion_sad	-1.437***	-1.188***	-1.687***	-1.337***	-1.542***	-1.432***
+	(0.036)	(0.041)	(0.057)	(0.063)	(0.067)	(0.056)
+Constant	1.473***	1.519***	1.985***	1.371***	1.504***	1.467***
+	(0.036)	(0.042)	(0.054)	(0.049)	(0.051)	(0.047)
+						
+Observations	3,600	1,800	1,800	1,200	1,200	1,200
+R-squared	0.885	0.945	0.845	0.882	0.882	0.893
+Rater Race	All	All	All	White	Black	Default
+Image Race	All	White	Black	All	All	All
+Notes: Standard errors are given in parentheses under estimated coefficients. Standard errors are heteroskedasticity-robust (HR) for all regressions. All regressions are estimated using ordinary least squares. Coefficients are individually statistically significant at the *10%, **5%, ***1% significance level.						

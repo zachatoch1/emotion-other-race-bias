@@ -1,0 +1,49 @@
+Table 4: Rater Race Effect				
+	(1)	(2)	(3)	(4)
+VARIABLES	Rating	Rating	Rating	Rating
+				
+0.emotion_congruence				-4.617***
+				(0.048)
+1.is_rater_white				0.000
+				(0.058)
+0o.emotion_congruence#0b.is_rater_white				0.000
+				(0.000)
+0.emotion_congruence#1.is_rater_white				0.017
+				(0.070)
+1b.emotion_congruence#0b.is_rater_white				0.000
+				(0.000)
+1b.emotion_congruence#1o.is_rater_white				0.000
+				(0.000)
+1.is_rater_black				0.018
+				(0.057)
+0o.emotion_congruence#0b.is_rater_black				0.000
+				(0.000)
+0.emotion_congruence#1.is_rater_black				0.048
+				(0.070)
+1b.emotion_congruence#0b.is_rater_black				0.000
+				(0.000)
+1b.emotion_congruence#1o.is_rater_black				0.000
+				(0.000)
+is_image_white	1.102***	0.014	0.558***	0.558***
+	(0.036)	(0.013)	(0.029)	(0.029)
+image_emotion_angry	1.603***	-0.017	0.793***	0.793***
+	(0.049)	(0.011)	(0.037)	(0.037)
+image_emotion_happy	2.850***	0.025	1.438***	1.437***
+	(0.039)	(0.018)	(0.036)	(0.036)
+o.image_emotion_sad	-	-	-	-
+				
+is_rater_white	-0.000	0.017*	0.008	
+	(0.045)	(0.009)	(0.035)	
+is_rater_black	0.018	0.067***	0.043	
+	(0.043)	(0.017)	(0.035)	
+emotion_congruence			4.595***	
+			(0.029)	
+Constant	3.586***	0.995***	-0.007	4.599***
+	(0.043)	(0.013)	(0.038)	(0.050)
+				
+Observations	1,800	1,800	3,600	3,600
+R-squared	0.739	0.015	0.885	0.885
+Emotion Congruence	1	0	All	All
+F-statistic for white-rater black-rater heterogeneity	0.170	6.702	0.911	
+P-value	0.680	0.00963	0.340	
+Notes: Standard errors are given in parentheses under estimated coefficients. Standard errors are heteroskedasticity-robust (HR) for all regressions. All regressions are estimated using ordinary least squares. Coefficients are individually statistically significant at the *10%, **5%, ***1% significance level.				
